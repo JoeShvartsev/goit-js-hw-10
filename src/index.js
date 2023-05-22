@@ -12,14 +12,10 @@ export const refs = {
 
 const debouncedFetchCountries = debounce(() => {
   const searchValue = refs.searchBox.value.trim();
-  fetchCountries(searchValue).then(response => {
-    if (response.error) {
-      console.log("Error fetching countries:", response.message);
-    } else {
-      renderCountryMarkup(response);
-    }
-  });
-  ;
+  fetchCountries(searchValue)
+  .then(countries => {
+    renderCountryMarkup(countries);
+  })
 }, DEBOUNCE_DELAY);
 
 refs.searchBox.addEventListener('input', debouncedFetchCountries);
