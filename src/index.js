@@ -20,3 +20,4 @@ const debouncedFetchCountries = debounce(() => {
 
 refs.searchBox.addEventListener('input', debouncedFetchCountries);
 
+

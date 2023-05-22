@@ -3,25 +3,25 @@ export function fetchCountries(searchValue) {
   params.set('fields', 'name,capital,languages,population,flags');
   const url = `https://restcountries.com/v3.1/name/${searchValue}?${params.toString()}`;
 
-
-  if (searchValue === '') {
+  if (searchValue === "") {
     return Promise.resolve([]);
   }
+
   return fetch(url)
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error(response.status);
       }
       return response.json();
     })
-    .catch(error => {
-      return {
-        error: true,
-        message: error.message
-      };
+    .then((data) => {
+      if (data.status === 404) {
+        throw new Error("Country not found");
+      }
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error fetching countries:", error);
+      return [];
     });
 }
-  
-
-
-
